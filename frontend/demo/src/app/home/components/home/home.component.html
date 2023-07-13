@@ -1,0 +1,119 @@
+
+<p>List of Users</p>
+<button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalNew" >New</button>      
+
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th scope="col" *ngIf="isAdmin">Editar</th>
+      <th scope="col" *ngIf="isAdmin">Borrar</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr  *ngFor="let u of usuarios">
+      <td>{{u.nombre}}</td>
+      <td>{{u.apellido}}</td>
+      <td>{{u.email}}</td>
+
+      <td>
+       <!--  <button [routerLink]="['/edit-usuario', u.id]"  type="button" class="btn btn-primary" >Update</button>  -->     
+        <!-- <button (click)="deleteUsuario(u.id)" type="button"  class="btn btn-danger" style="margin-left: 10px;">Delete</button> 
+        -->
+        <td *ngIf="isAdmin"><button class="btn btn-outline-warning" routerLink="/editar/{{u.id}}"><i class="far fa-edit"></i> Editar</button></td>
+        <button  type="button"  *ngIf="isAdmin" class="btn btn-danger" style="margin-left: 10px;">Delete</button>
+
+  </tbody>
+</table>
+
+
+
+<!-- Modal para un nuevo usuario -->
+<div class="modal fade" id="exampleModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Nuevo Usuario</h5>
+      </div>
+      <div class="modal-body">
+<!--         <form  [formGroup]="form" (ngSubmit)="createUser2($event)">
+ -->          <form  [formGroup]="form" >
+
+          <div class="form-outline mb-4">
+            <div class="row">
+              <div class="col-md-6">
+                <input required formControlName="nombre" class="form-control form-control-lg" id="nombre" name="nombre" type="text" />
+                <label class="form-label">Nombres</label>
+              </div>
+              <div class="col-md-6">
+                <input type="text" id="apellido" formControlName="apellido" name="apellido" class="form-control form-control-lg" />
+                <label class="form-label">Apellidos</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-outline mb-4">
+            <div class="row">
+              <div class="col-md-6">
+
+            <input type="email" id="usuario" formControlName="usuario" name="usuario" class="form-control form-control-lg" />
+            <label class="form-label">Nombre de usuario</label>
+          </div>
+
+          <div class="col-md-6">
+
+            <input type="email" id="email" formControlName="email" name="email" class="form-control form-control-lg" />
+            <label class="form-label">Email address</label>
+          </div>
+        </div>
+
+
+          <div class="form-outline mb-4">
+
+            
+            <input type="password" id="contrasena" formControlName="password" name="password" class="form-control form-control-lg" />
+            <label class="form-label">Password</label>
+          </div>
+
+
+
+            <div class="row">
+            
+              <div class="col-md-6">
+
+            <label>Rol</label>
+            <select class="form-control" formControlName="rol" id="rol" name="rol">
+              <option   *ngFor="let r of roles">..</option>
+            </select>
+          </div>
+
+
+            <div class="col-md-6">
+
+            <label >Estado</label>
+            <select formControlName="estado" name="estado" id="estado" class="form-control" id="exampleFormControlSelect">
+              <option>A</option>
+              <option>I</option>
+            </select>
+          </div>
+
+
+        </div>
+      
+
+          <div class="pt-1 mb-4">
+            <button class="btn btn-dark btn-lg btn-block" type="submit">Create</button>
+          </div>
+        </div>
+
+      
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div> 

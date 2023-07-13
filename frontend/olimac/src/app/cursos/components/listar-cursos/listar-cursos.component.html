@@ -1,0 +1,62 @@
+<app-menu></app-menu>
+<div class="container">
+
+  <div class="mt-3" *ngIf="isAdmin">
+    <button class="btn btn-outline-success btn-lg" routerLink="/nuevoUser">
+      <i class="fas fa-plus-circle"></i> Nuevo curso</button>
+  </div>
+
+  <table class="table ">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nombres</th>
+<!--         <th scope="col">Nombre de curso</th>
+ -->        <th scope="col">Estado</th>
+<!--         <th scope="col">Estado</th>
+ -->        <th scope="col">Ver</th>
+
+        <th scope="col" *ngIf="isAdmin">Editar</th>
+        <th scope="col" *ngIf="isAdmin">Borrar</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let curso of cursos">
+        <td>{{curso.id}}</td>
+        <td>{{curso.nombre}}   </td>
+        <td>{{curso.estado}}</td>
+         <td><button class="btn btn-outline-primary" routerLink="/detalleUser/{{curso.id}}"><i class="far fa-eye"></i> Ver</button></td>
+        <td *ngIf="isAdmin"><button class="btn btn-outline-warning" routerLink="/editarCurso/{{curso.id}}"><i class="far fa-edit"></i> Editar</button></td>
+        <td  *ngIf="isAdmin" ><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" ><i class="far fa-trash-alt"></i> Eliminar</button></td>
+
+
+
+
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+<div *ngFor="let curso of cursos" class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Deseas Eliminar este registro?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+   
+      <div  class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="submit" (click)="borrar(curso.id)" data-dismiss="modal" *ngIf="isAdmin" class="btn btn-primary">Si</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<app-footer></app-footer>
