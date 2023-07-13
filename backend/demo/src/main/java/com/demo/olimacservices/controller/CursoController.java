@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.olimacservices.dto.Mensaje;
+import com.demo.olimacservices.entity.Creador;
 import com.demo.olimacservices.entity.Curso;
 import com.demo.olimacservices.enums.EstadoCurso;
 import com.demo.olimacservices.security.entity.Usuario;
 import com.demo.olimacservices.security.service.UsuarioService;
+import com.demo.olimacservices.services.CreadorService;
 import com.demo.olimacservices.services.CursoService;
 
 @RestController
@@ -38,7 +40,7 @@ public class CursoController {
     CursoService cursoService;
 
      @Autowired
-    UsuarioService usuarioService;
+    CreadorService creadorR;
 
     
     @GetMapping("/listar-cursos")
@@ -99,8 +101,8 @@ public class CursoController {
 
   @PreAuthorize("hasRole('CREADOR')")
 @PostMapping("/create")
-public ResponseEntity<Mensaje> createCurso(@RequestBody Curso cursoDto, @AuthenticationPrincipal Usuario userDetails) {
-    Usuario creador = obtenerCreadorDesdeUserDetails(userDetails);
+public ResponseEntity<Mensaje> createCurso(@RequestBody Curso cursoDto, @AuthenticationPrincipal Creador userDetails) {
+    Creador creador = obtenerCreadorDesdeUserDetails(userDetails);
 
     // Verificar la cantidad de cursos activos del creador
     if (creador.getCursosCreados() != null && creador.getCursosCreados().size() >= 2) {
@@ -118,9 +120,9 @@ public ResponseEntity<Mensaje> createCurso(@RequestBody Curso cursoDto, @Authent
     return ResponseEntity.ok(new Mensaje("Curso creado"));
 }
 
-private Usuario obtenerCreadorDesdeUserDetails(Usuario userDetails) {
-    String nombreUsuario = userDetails.getNombreUsuario();
-    return usuarioService.getByNombreUsuario(nombreUsuario)
+private Creador obtenerCreadorDesdeUserDetails(Creador userDetails) {
+    String nombreUsuario = userDetails.getNombre();
+    return creadorR.getByNombre(nombreUsuario)
             .orElseThrow(() -> new EntityNotFoundException("No se encontró un usuario con el rol de CREADOR"));
 }
 

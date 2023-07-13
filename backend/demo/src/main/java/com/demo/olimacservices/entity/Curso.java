@@ -50,7 +50,7 @@ public class Curso {
 
     @ManyToOne
     @JoinColumn(name = "creador_id")
-    private Usuario creador;
+    private Creador creador;
 
     public Curso(
             @NotNull(message = "El campo nombre no puede ser nulo") @NotBlank(message = "El campo nombre no puede estar vacío") String nombre,
@@ -59,6 +59,17 @@ public class Curso {
         this.nombre = nombre;
         this.contenido = contenido;
         this.estado = estado;
+    }
+
+    public Curso(
+            @NotNull(message = "El campo nombre no puede ser nulo") @NotBlank(message = "El campo nombre no puede estar vacío") String nombre,
+            @NotNull(message = "El campo contendido no puede ser nulo") @NotBlank(message = "El campo contenido no puede estar vacío") String contenido,
+            EstadoCurso estado, List<Usuario> usuarios, Creador creador) {
+        this.nombre = nombre;
+        this.contenido = contenido;
+        this.estado = estado;
+        this.usuarios = usuarios;
+        this.creador = creador;
     }
 
     public Curso(

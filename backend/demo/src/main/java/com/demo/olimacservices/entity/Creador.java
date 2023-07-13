@@ -1,6 +1,7 @@
 package com.demo.olimacservices.entity;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,5 +38,15 @@ public class Creador {
     @OneToMany(mappedBy = "creador")
     private List<Curso> cursos;
     
+
+    public List<Curso> getCursosCreados() {
+        return cursos;
+    }
+
+    public List<Curso> getCursosCreados2() {
+    return cursos.stream()
+        .filter(curso -> curso.getCreador().equals(this))
+        .collect(Collectors.toList());
+}
 }
 

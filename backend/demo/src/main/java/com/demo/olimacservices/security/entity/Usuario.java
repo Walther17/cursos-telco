@@ -87,15 +87,7 @@ public class Usuario {
         this.password = password;
     }
 
-    public List<Curso> getCursosCreados() {
-        return cursos;
-    }
-
-    public List<Curso> getCursosCreados2() {
-    return cursos.stream()
-        .filter(curso -> curso.getCreador().equals(this))
-        .collect(Collectors.toList());
-}
+    
 
 
 
